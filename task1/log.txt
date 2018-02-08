@@ -1,0 +1,11 @@
+commit bb5b4d7bb2cea921c52e1aac6a4e7a387fb5d3b8
+Author: Alexander Valai <valexxjr@gmail.com>
+Date:   Thu Feb 8 19:01:49 2018 +0300
+
+    modified status.txt
+
+commit 3008bc0c8f898c6b4f87a2a1f6ca0b4d38298be4
+Author: Alexander Valai <valexxjr@gmail.com>
+Date:   Thu Feb 8 18:59:08 2018 +0300
+
+    add .gitignore
