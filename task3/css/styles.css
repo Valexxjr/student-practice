@@ -175,3 +175,11 @@ aside {
   border-radius: 23%;
   border: 1px solid black;
 }
+footer span {
+  font-size: 1.5vw;
+  margin-left: 5%;
+}
+#date_change {
+  float: right;
+  width: 10%;
+}
