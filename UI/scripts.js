@@ -165,7 +165,10 @@ var module = (function () {
             return false;
         if(photopost.photoLink.length == 0)
             return false;
-        
+        // проверка на уникальность id
+        for(i = 0; i < photoPosts.length; i++)
+            if(photoPosts[i].id == photopost.id)
+                return false;
         return true;
     }
     function addPhotoPost(photopost) {
@@ -226,6 +229,13 @@ console.log(module.addPhotoPost({
     createdAt: new Date('2018-02-23T23:00:00'),
     author: 'Sanya',
     photoLink: ''
+}));
+console.log("ID is not unique ->" + module.addPhotoPost({
+    id: '22',
+    description: 'Женская сборная Беларуси выиграла эстафету в рамках соревнований по биатлону на Олимпийских играх в Пхёнчхане!!!',
+    createdAt: new Date('2018-02-24T23:00:00'),
+    author: 'Sanya',
+    photoLink: 'link_to_photo'
 }));
 console.log(photoPosts.length)
 console.log(module.removePhotoPost('1'))
