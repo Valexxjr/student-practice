@@ -31,7 +31,7 @@ let dom = (function() {
 
         let mainImg = document.createElement('img');
         mainImg.className = 'photopost';
-        mainImg.src = 'img/road.jpg';
+        mainImg.src = post.photoLink;
 
         let postDescription = document.createElement('div');
         postDescription.className = "description";
