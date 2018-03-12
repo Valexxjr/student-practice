@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 let photoPosts = [
     {
         id: '1',
@@ -63,7 +63,7 @@ let photoPosts = [
         author: 'Валай Александр',
         photoLink: 'https://github.com/Valexxjr/student-practice/blob/master/UI/img/road.jpg?raw=true',
         likes: [],
-        hashtags: ['#more', 'add']
+        hashtags: ['#more', '#add']
     }, {
         id: '9',
         description: 'Пост 3',
@@ -127,7 +127,7 @@ let photoPosts = [
         author: 'Александров Александр',
         photoLink: 'https://github.com/Valexxjr/student-practice/blob/master/UI/img/road.jpg?raw=true',
         likes: [],
-        hashtags: ['#hi', '#hello', 'nicetosee']
+        hashtags: ['#hi', '#hello', '#nicetosee']
     }, {
         id: '17',
         description: 'Еще мой пост',
@@ -162,7 +162,7 @@ let photoPosts = [
         hashtags: ['#thelasttime', '#wesaygoodbye']
     }];
 
-var module = (function () {
+let module = (function () {
 
     function getPhotoPosts(skip = 0, top = 10, filterConfig = {}) {
         let temp = photoPosts.filter(post => {
