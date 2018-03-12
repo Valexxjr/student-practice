@@ -186,7 +186,7 @@ var module = (function () {
             return true;
         });
         temp.sort((photopost1, photopost2) => {
-            return photopost1.createdAt - photopost2.createdAt;
+            return photopost2.createdAt - photopost1.createdAt;
         });
         return temp.slice(skip, skip + top);
     }
