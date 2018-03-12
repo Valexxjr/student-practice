@@ -51,7 +51,9 @@ let dom = (function() {
             postDescription.appendChild(postHashtags);
         }
         let postButtons = document.createElement('div');
-        postButtons.innerHTML = "<img src=\"img/like.png\" class=\"like\"> Like it";
+        postButtons.className = 'buttons';
+        postButtons.innerHTML = "<img src=\"img/like.png\" class=\"like\"><b>" + 
+            ((post.likes.length > 0) ? (post.likes.length) : ('')) + "  </b>Like it";
         if(user == post.author) {
             postButtons.innerHTML += "<img src=\"img/edit.png\" class=\"like\"> Edit post<img src=\"img/delete.png\" class=\"like\"> Delete post";
         }

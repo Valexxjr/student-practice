@@ -257,8 +257,11 @@ header {
 .like {
   margin: 0.5%;
   margin-left: 5%;
-  width: 2vw;
-  height: 2vw;
+  width: 1.6vw;
+  height: 1.6vw;
+}
+.buttons b {
+  margin-right: 1%;
 }
 #more {
   margin-top: 2%;
