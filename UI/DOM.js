@@ -46,7 +46,7 @@ let dom = (function() {
             });
             return res;
         }
-        if (allhashtags != '') {
+        if (allhashtags() != '') {
             postHashtags.innerHTML = "<p>" + allhashtags() + "</p>";
             postDescription.appendChild(postHashtags);
         }
