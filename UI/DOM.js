@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 let user = null;
 let dom = (function() {
     function setUser(username = null) {
@@ -94,7 +94,7 @@ let dom = (function() {
 
 }());
 
-function showPosts(skip, top, filterConfig) {
+function showPosts(skip = 0, top = 10, filterConfig = {}) {
     document.body.querySelector('aside').innerHTML="";
     if (user !== null) {
         let addButton = document.createElement('div');
@@ -130,3 +130,13 @@ function setUser(user) {
     dom.setUser(user);
     showPosts();
 }
+
+debugger;
+
+showPosts(4, 15, {});
+
+showPosts({author: 'Валай Александр'});
+
+debugger;
+
+setUser('Валай Александр');
