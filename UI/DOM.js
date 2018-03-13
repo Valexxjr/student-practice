@@ -135,8 +135,42 @@ debugger;
 
 showPosts(4, 15, {});
 
-showPosts({author: 'Валай Александр'});
+debugger;
+
+showPosts(0, 20, {author: 'Валай Александр'});
 
 debugger;
 
+setUser('alexandr');
+
+debugger;
+
+addPost({
+    id: '26',
+    description: 'Демо-пост добавлен',
+    createdAt: new Date('2018-03-29T14:00:00'),
+    author: 'alexandr',
+    photoLink: 'https://blogs.colum.edu/demomagazine/files/2014/09/demo.png',
+    likes: ['userinknown', 'someone', 'valexx', 'eddie', 'lookview', 'daem'],
+    hashtags: ['#demopost', '#new', '#fresh']
+});
+
+debugger;
+
+setUser();
+
+debugger;
+
+editPost('26', {
+    description: 'Демо-пост добавлен да еще и изменен',
+    likes: ['valexx', 'eddie', 'lookview', 'daem'],
+    hashtags: ['#demopost', '#new', '#fresh', '#changed', '#different']
+});
+
+debugger;
+
+removePost('26');
+
 setUser('Валай Александр');
+
+debugger;
