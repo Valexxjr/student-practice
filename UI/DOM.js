@@ -68,18 +68,22 @@ let dom = (function() {
     function getTime(post) {
         var date = post.createdAt;
         var days = date.getDate();
-        if (days < 10) 
+        if (days < 10) {
             days = '0' + days;
+        }
         var months = date.getMonth() + 1;
-        if (months < 10) 
+        if (months < 10) { 
             months = '0' + months;
+        }
         var years = date.getFullYear();
         var hours = date.getHours();
-        if (hours < 10)
+        if (hours < 10) {
             hours = '0' + hours;
+        }
         var minutes = date.getMinutes();
-        if (minutes < 10)
+        if (minutes < 10) {
             minutes = '0' + minutes;
+        }
         return days + '.' + months + '.' + years + ' ' + hours + ':' + minutes;
     }
 
