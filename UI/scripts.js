@@ -174,12 +174,12 @@ let module = (function () {
                 if (post.createdAt < filterConfig.createdAt)
                     return false;
             }
-            if (Array.isArray(filterConfig.hashtags) && filterConfig.hashtags.every(hashtag => {
-                return hashtag[0] == '#';
-            })) {
+            let validHashtags = Array.isArray(filterConfig.hashtags) && 
+                filterConfig.hashtags.every(hashtag => { return hashtag[0] == '#';}); 
+            if (validHashtags) {
                 return filterConfig.hashtags.every(hashtag => {
-                    return post.hashtags.some(post_hashtag => {
-                        return post_hashtag == hashtag;
+                    return post.hashtags.some(postHashtag => {
+                        return postHashtag == hashtag;
                     })
                 })
             }
@@ -192,9 +192,7 @@ let module = (function () {
     }
 
     function getPhotoPost(id) {
-        let returnpost = null;
-        photoPosts.forEach(post => { if (post.id == id) returnpost = post; });
-        return returnpost;
+        return photoPosts.filter(post => { if (post.id == id) return true; })[0];
     }
 
     function validatePhotoPost(photopost) {
@@ -209,13 +207,20 @@ let module = (function () {
             return false;
         if (!Array.isArray(photopost.hashtags) || !Array.isArray(photopost.likes))
             return false;
-        if (photoPosts.some(post => { return post.id == photopost.id; }))
+        let wrongIds = photoPosts.some(post => { 
+            return post.id == photopost.id; 
+        }); 
+        if (wrongIds)
             return false;
-        if (!photopost.hashtags.every(hashtag => {
+        let wrongHashtags = !photopost.hashtags.every(hashtag => {
             return (typeof (hashtag) == 'string' && hashtag[0] == '#');
-        }))
+        }); 
+        if (wrongHashtags)
             return false;
-        if (!photopost.likes.every(like => { return (typeof (like) == 'string'); }))
+        let wrongLikes = !photopost.likes.every(like => { 
+            return (typeof (like) == 'string'); 
+        });
+        if (wrongLikes)
             return false;
         return true;
     }
