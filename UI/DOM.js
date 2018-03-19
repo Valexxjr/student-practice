@@ -105,11 +105,25 @@ let dom = (function() {
         }
         return days + '.' + months + '.' + years + ' ' + hours + ':' + minutes;
     }
-
+    function selectAuthors() {
+        var obj = {};
+        let arr = module.getPhotoPosts(0, 100);
+        for (var i = 0; i < arr.length; i++) {
+            var str = arr[i].author;
+            obj[str] = true;
+        }
+        let select = document.querySelector('select');
+        Object.keys(obj).forEach(key => {
+            let option = document.createElement('option');
+            option.innerHTML = key;
+            select.appendChild(option);
+        });
+    }
     return {
         showPhotoPost,
         setUser,
-        addLike
+        addLike,
+        selectAuthors
     }
 
 }());
@@ -155,6 +169,7 @@ function addLike(id) {
     dom.addLike(id);
     showPosts();
 }
+
 debugger;
 
 showPosts(4, 15, {});
@@ -204,3 +219,7 @@ debugger;
 removePost('26');
 
 setUser('Валай Александр');
+
+debugger;
+
+dom.selectAuthors();
