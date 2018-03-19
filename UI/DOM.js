@@ -12,7 +12,7 @@ let dom = (function() {
             document.getElementById('name').innerHTML ='';
             document.querySelector('#logout').innerHTML = '<img src="img/signin.png" width="13%" height="13%"/><span>Sign in</span>';
         }
-    };
+    }
 
     let photoContainer = document.querySelector('aside');
 
@@ -63,7 +63,26 @@ let dom = (function() {
         postDiv.appendChild(postDescription);
         postDiv.appendChild(postButtons);
         photoContainer.appendChild(postDiv);
-    };
+    }
+    function addLike(id){
+        if(user === null) {
+            return;
+        }
+        let photoPost = module.getPhotoPost(id);
+        if(photoPost) {
+            let postLikes = photoPost.likes;
+            let changed = false;
+            for (let i = 0; i < postLikes.length; i++){
+                if(postLikes[i] == user) {
+                    postLikes.splice(i, 1);
+                    changed = true;
+                }
+            }
+            if(!changed) {
+                postLikes.push(user);
+            }
+        }
+    }
 
     function getTime(post) {
         var date = post.createdAt;
@@ -89,7 +108,8 @@ let dom = (function() {
 
     return {
         showPhotoPost,
-        setUser
+        setUser,
+        addLike
     }
 
 }());
@@ -131,6 +151,10 @@ function setUser(user) {
     showPosts();
 }
 
+function addLike(id) {
+    dom.addLike(id);
+    showPosts();
+}
 debugger;
 
 showPosts(4, 15, {});
@@ -157,6 +181,14 @@ addPost({
 
 debugger;
 
+addLike('26');
+
+debugger;
+
+addLike('26');
+
+debugger;
+
 setUser();
 
 debugger;
@@ -172,5 +204,3 @@ debugger;
 removePost('26');
 
 setUser('Валай Александр');
-
-debugger;
