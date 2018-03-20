@@ -17,7 +17,7 @@ let dom = (function() {
     let photoContainer = document.querySelector('aside');
 
     function showPhotoPost(post, pos) {
-        let isUser = (user == post.author);
+        let isUser = (user === post.author);
         let postDiv = document.createElement('div');
         postDiv.className = 'post';
 
@@ -65,7 +65,7 @@ let dom = (function() {
         postDiv.appendChild(postButtons);
         photoContainer.appendChild(postDiv);
     }
-    
+
     function addLike(id){
         if(user === null) {
             return;
@@ -100,46 +100,51 @@ let dom = (function() {
             select.appendChild(option);
         });
     }
+
+    function showPhotoPosts(skip = 0, top = 10, filterConfig = {}) {
+        document.body.querySelector('aside').innerHTML="";
+        if (user !== null) {
+            let addButton = document.createElement('div');
+            addButton.id = 'create';
+            addButton.innerHTML = '<span>What\'s new? Create a post to share</span><a href=""><img src="img/add.png"></a>';
+            document.querySelector('aside').insertBefore(addButton, document.querySelector('aside').firstChild);
+        }
+        let currentphotoPosts = module.getPhotoPosts(skip, top, filterConfig);
+        for (let i = 0; i < currentphotoPosts.length; i++)
+            dom.showPhotoPost(currentphotoPosts[i], i);
+        if(module.getPhotoPosts(skip, 1000, filterConfig).length > currentphotoPosts.length) {
+            document.querySelector('aside').innerHTML += 
+            '<button type="button" id="more"><img src="img/more.png" width="10%" height="10%"></button>';
+        }
+    }
+    
+    function addPost(post) {
+        module.addPhotoPost(post);
+        showPhotoPosts();
+    }
+    
+    function removePost(id) {
+        module.removePhotoPost(id);
+        showPhotoPosts();
+    }
+    
+    function editPost(id, post) {
+        module.editPhotoPost(id, post);
+        showPhotoPosts();
+    }
+
     return {
         showPhotoPost,
         setUser,
         addLike,
-        selectAuthors
+        selectAuthors,
+        showPhotoPosts,
+        addPost,
+        removePost,
+        editPost
     }
 
 }());
-
-function showPosts(skip = 0, top = 10, filterConfig = {}) {
-    document.body.querySelector('aside').innerHTML="";
-    if (user !== null) {
-        let addButton = document.createElement('div');
-        addButton.id = 'create';
-        addButton.innerHTML = '<span>What\'s new? Create a post to share</span><a href=""><img src="img/add.png"></a>';
-        document.querySelector('aside').insertBefore(addButton, document.querySelector('aside').firstChild);
-    }
-    let currentphotoPosts = module.getPhotoPosts(skip, top, filterConfig);
-    for (let i = 0; i < currentphotoPosts.length; i++)
-        dom.showPhotoPost(currentphotoPosts[i], i);
-    if(module.getPhotoPosts(skip, 1000, filterConfig).length > currentphotoPosts.length) {
-        document.querySelector('aside').innerHTML += 
-        '<button type="button" id="more"><img src="img/more.png" width="10%" height="10%"></button>';
-    }
-}
-
-function addPost(post) {
-    module.addPhotoPost(post);
-    showPosts();
-}
-
-function removePost(id) {
-    module.removePhotoPost(id);
-    showPosts();
-}
-
-function editPost(id, post) {
-    module.editPhotoPost(id, post);
-    showPosts();
-}
 
 function setUser(user) {
     dom.setUser(user);
@@ -149,6 +154,22 @@ function setUser(user) {
 function addLike(id) {
     dom.addLike(id);
     showPosts();
+}
+
+function showPosts(id) {
+    dom.showPhotoPosts();
+}
+
+function addPost(id) {
+    dom.addPost(id);
+}
+
+function removePost(id) {
+    dom.removePost(id);
+}
+
+function editPost(id, post) {
+    dom.editPost(id, post);
 }
 
 debugger;
