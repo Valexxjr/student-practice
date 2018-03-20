@@ -2,7 +2,7 @@
 let user = null;
 let dom = (function() {
     function setUser(username = null) {
-        var isUser = (username !== null);
+        let isUser = (username !== null);
         user = username;
         if (isUser) {
             document.getElementById('name').innerHTML = '<img src="img/avatar.png" width="12%" height="12%"/><span>' + username + '</span>';
@@ -17,7 +17,7 @@ let dom = (function() {
     let photoContainer = document.querySelector('aside');
 
     function showPhotoPost(post, pos) {
-        var isUser = (user == post.author);
+        let isUser = (user == post.author);
         let postDiv = document.createElement('div');
         postDiv.className = 'post';
 
@@ -27,7 +27,8 @@ let dom = (function() {
         
         let dateItem = document.createElement('span');
         dateItem.id = 'date';
-        dateItem.innerHTML = getTime(post);
+        let dateOptions = { hour: 'numeric', minute: 'numeric' };
+        dateItem.innerHTML = post.createdAt.toLocaleDateString('ru-RU', dateOptions);
 
         let mainImg = document.createElement('img');
         mainImg.className = 'photopost';
@@ -40,7 +41,7 @@ let dom = (function() {
         postHashtags.className = 'hashtags';
         postDescription.innerHTML = '<p>' + post.description + '</p>';
         function allhashtags() {
-            var res = '';
+            let res = '';
             post.hashtags.forEach(hashtag => {
                 res += (hashtag + ' ');
             });
@@ -64,6 +65,7 @@ let dom = (function() {
         postDiv.appendChild(postButtons);
         photoContainer.appendChild(postDiv);
     }
+    
     function addLike(id){
         if(user === null) {
             return;
@@ -84,32 +86,11 @@ let dom = (function() {
         }
     }
 
-    function getTime(post) {
-        var date = post.createdAt;
-        var days = date.getDate();
-        if (days < 10) {
-            days = '0' + days;
-        }
-        var months = date.getMonth() + 1;
-        if (months < 10) { 
-            months = '0' + months;
-        }
-        var years = date.getFullYear();
-        var hours = date.getHours();
-        if (hours < 10) {
-            hours = '0' + hours;
-        }
-        var minutes = date.getMinutes();
-        if (minutes < 10) {
-            minutes = '0' + minutes;
-        }
-        return days + '.' + months + '.' + years + ' ' + hours + ':' + minutes;
-    }
     function selectAuthors() {
-        var obj = {};
+        let obj = {};
         let arr = module.getPhotoPosts(0, 100);
-        for (var i = 0; i < arr.length; i++) {
-            var str = arr[i].author;
+        for (let i = 0; i < arr.length; i++) {
+            let str = arr[i].author;
             obj[str] = true;
         }
         let select = document.querySelector('select');
