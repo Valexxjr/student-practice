@@ -85,20 +85,17 @@ let dom = (function() {
             }
         }
     }
-
     function selectAuthors() {
-        let obj = {};
-        let arr = module.getPhotoPosts(0, 100);
-        for (let i = 0; i < arr.length; i++) {
-            let str = arr[i].author;
-            obj[str] = true;
+        let setAuthors = new Set();
+        for (let i = 0; i < photoPosts.length; i++) {
+            setAuthors.add(photoPosts[i].author);
         }
         let select = document.querySelector('select');
-        Object.keys(obj).forEach(key => {
+        for (let author of setAuthors) { 
             let option = document.createElement('option');
-            option.innerHTML = key;
+            option.innerHTML = author;
             select.appendChild(option);
-        });
+        }
     }
 
     function showPhotoPosts(skip = 0, top = 10, filterConfig = {}) {
