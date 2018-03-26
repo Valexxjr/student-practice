@@ -85,6 +85,7 @@ let dom = (function() {
             }
         }
     }
+
     function selectAuthors() {
         let setAuthors = new Set();
         for (let i = 0; i < photoPosts.length; i++) {
@@ -107,9 +108,10 @@ let dom = (function() {
             document.querySelector('aside').insertBefore(addButton, document.querySelector('aside').firstChild);
         }
         let currentphotoPosts = module.getPhotoPosts(skip, top, filterConfig);
-        for (let i = 0; i < currentphotoPosts.length; i++)
-            dom.showPhotoPost(currentphotoPosts[i], i);
-        if(module.getPhotoPosts(skip, 1000, filterConfig).length > currentphotoPosts.length) {
+        currentphotoPosts.forEach((post, index) => {
+            dom.showPhotoPost(post, index);
+        });
+        if(photoPosts.length > currentphotoPosts.length) {
             document.querySelector('aside').innerHTML += 
             '<button type="button" id="more"><img src="img/more.png" width="10%" height="10%"></button>';
         }
