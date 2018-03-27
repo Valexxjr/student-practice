@@ -251,12 +251,18 @@ header {
   border-radius: 10px;
 }
 
-#like {
-  margin: 0.5%;
-  width: 2vw;
-  height: 2vw;
+.description p, .hashtags p {
+  margin: 5%;
 }
-
+.like {
+  margin: 0.5%;
+  margin-left: 5%;
+  width: 1.6vw;
+  height: 1.6vw;
+}
+.buttons b {
+  margin-right: 1%;
+}
 #more {
   margin-top: 2%;
   background-color: #ebebeb;
