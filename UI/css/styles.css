@@ -254,15 +254,31 @@ header {
 .description p, .hashtags p {
   margin: 5%;
 }
+
+.like:hover {
+  transform: translateY(-7px);
+  cursor: pointer;
+}
+
 .like {
   margin: 0.5%;
   margin-left: 5%;
+  margin-right: 3%;
   width: 1.6vw;
   height: 1.6vw;
+  outline: none;
+  color: #524f4e;
+  transition: .35s;
 }
+
+.buttons span {
+  padding-left: 3%;
+}
+
 .buttons b {
   margin-right: 1%;
 }
+
 #more {
   margin-top: 2%;
   background-color: #ebebeb;
