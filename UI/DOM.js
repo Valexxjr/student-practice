@@ -51,10 +51,33 @@ let dom = (function() {
             postHashtags.innerHTML = '<p>' + allhashtags() + '</p>';
             postDescription.appendChild(postHashtags);
         }
+
         let postButtons = document.createElement('div');
         postButtons.className = 'buttons';
-        postButtons.innerHTML = '<img src="img/like.png" class="like" onclick="addLike(' + post.id + ')"><b>' + 
-            ((post.likes.length > 0) ? (post.likes.length) : ('')) + '  </b>Like it';
+
+        let postLike = document.createElement('img');
+        
+        let isLiked = false;
+        post.likes.forEach(like => {
+            if (like == user) {
+                isLiked = true;
+            }
+        });
+
+        if (isLiked) {
+            postLike.src = 'img/like_push.png';
+        }
+        else {
+            postLike.src = 'img/like.png';
+        }
+        postLike.className = 'like';
+        
+        postLike.setAttribute('onclick', 'addLike(' + post.id + ')');
+        let likeText = document.createElement('b');
+        likeText.innerText =  ((post.likes.length > 0) ? (post.likes.length) : (''));
+        postButtons.appendChild(postLike);
+        postButtons.appendChild(likeText);
+        postButtons.innerHTML += '<span>Like</span>';
         if(user == post.author) {
             postButtons.innerHTML += '<img src="img/edit.png" class="like"> Edit post<img src="img/delete.png" class="like"> Delete post';
         }
