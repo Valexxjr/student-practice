@@ -149,7 +149,7 @@ let photoPosts = [
         description: 'Посты!!!',
         createdAt: new Date('2018-03-05T19:15:00'),
         author: 'Валай Александр',
-        photoLink: 'https://github.com/Valexxjr/student-practice/blob/master/UI/img/road.jpg?raw=true',
+        photoLink: 'http://files.all-free-download.com//downloadfiles/wallpapers/1600_1200/germany_forest_road_wallpaper_landscape_nature_1228.jpg',
         likes: ['okman', 'userunknown'],
         hashtags: ['#onebyone', '#again']
     }, {
