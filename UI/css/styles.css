@@ -17,8 +17,6 @@ header {
   width: 98%;
   height: 15%;
   padding: 1%;
-  border-top: 2px solid #606060;
-  border-bottom: 2px solid #606060;
 }
 
 #logo-container {
@@ -68,7 +66,6 @@ header {
 
   main {
     float: left;
-    border-right: 1px solid #606060;
     width: 40%;
     height: 86vh;
   }
@@ -130,8 +127,6 @@ header {
     width: 98%;
     padding: 1%;
     height: 2%;
-    border-top: 2px solid #606060;
-    border-bottom: 2px solid #606060;
     position: absolute;
     bottom: 0;
     float: bottom;
