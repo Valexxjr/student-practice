@@ -1,7 +1,9 @@
 ﻿'use strict';
 let user = null;
+let postsVisible = 10;
 let dom = (function() {
     function setUserName(username = null) {
+        postsVisible = 10;
         let isUser = (username !== null);
         user = username;
         if (isUser) {
@@ -152,24 +154,42 @@ let dom = (function() {
         }
     }
 
-    function showPhotoPosts(skip = 0, top = 10, filterConfig = {}) {
-        document.body.querySelector('aside').innerHTML="";
+    function showPhotoPosts(skip = 0, top = 0, filterConfig = {}) {
+        document.body.querySelector('aside').innerHTML='';
         if (user !== null) {
             let addButton = document.createElement('div');
             addButton.id = 'create';
             addButton.innerHTML = '<span>What\'s new? Create a post to share</span><a href=""><img src="img/add.png"></a>';
             document.querySelector('aside').insertBefore(addButton, document.querySelector('aside').firstChild);
         }
-        let currentphotoPosts = module.getPhotoPosts(skip, top, filterConfig);
+        let currentphotoPosts = module.getPhotoPosts(skip, postsVisible + top, filterConfig);
         currentphotoPosts.forEach((post, index) => {
             dom.showPhotoPost(post, index);
         });
+        postsVisible = currentphotoPosts.length;
         if(photoPosts.length > currentphotoPosts.length) {
-            document.querySelector('aside').innerHTML += 
-            '<button type="button" id="more"><img src="img/more.png" width="10%" height="10%"></button>';
+            let buttonMore = document.createElement('button');
+            buttonMore.type = 'button';
+            buttonMore.id = 'more';
+            buttonMore.onclick = function () {
+                paginate(currentphotoPosts.length);
+            };
+
+            let imgMore = document.createElement('img');
+            imgMore.src = 'img/more.png';
+            imgMore.style.width = '10%';
+            imgMore.style.height = '10%';
+
+            buttonMore.appendChild(imgMore);
+            document.querySelector('aside').appendChild(buttonMore);
         }
     }
-    
+
+    function paginate(startNum) {
+        startNum = startNum || 0;
+        showPhotoPosts(0, startNum + 10);
+    }
+
     function addPost(post) {
         module.addPhotoPost(post);
         showPhotoPosts();
@@ -208,7 +228,7 @@ function addLike(id) {
     showPosts();
 }
 
-function showPosts(id) {
+function showPosts() {
     dom.showPhotoPosts();
 }
 
