@@ -1,7 +1,7 @@
 ﻿'use strict';
 let user = null;
 let postsVisible = 10;
-let dom = (function() {
+let dom = (function () {
     function setUserName(username = null) {
         postsVisible = 10;
         let isUser = (username !== null);
@@ -20,13 +20,13 @@ let dom = (function() {
 
             logOut.appendChild(image);
             logOut.appendChild(logText);
-            
+
             logOut.onclick = function () {
                 setUser();
             };
         }
         else {
-            document.getElementById('name').innerHTML ='';
+            document.getElementById('name').innerHTML = '';
             document.querySelector('#logout').innerHTML = '';
             let signIn = document.querySelector('#logout');
             let image = document.createElement('img');
@@ -39,9 +39,9 @@ let dom = (function() {
 
             signIn.appendChild(image);
             signIn.appendChild(signText);
-            
-            signIn.onclick = function() { 
-                setUser('Валай Александр') 
+
+            signIn.onclick = function () {
+                setUser('Валай Александр')
             };
         }
     }
@@ -56,7 +56,7 @@ let dom = (function() {
         let userPhoto = document.createElement('div');
         userPhoto.className = 'userphoto';
         userPhoto.innerHTML = '<img src="img/avatar.png" width="12%" height="12%"/><span>\ ' + post.author + '</span>';
-        
+
         let dateItem = document.createElement('span');
         dateItem.id = 'date';
         let dateOptions = { hour: 'numeric', minute: 'numeric' };
@@ -88,7 +88,7 @@ let dom = (function() {
         postButtons.className = 'buttons';
 
         let postLike = document.createElement('img');
-        
+
         let isLiked = false;
         post.likes.forEach(like => {
             if (like == user) {
@@ -103,15 +103,32 @@ let dom = (function() {
             postLike.src = 'img/like.png';
         }
         postLike.className = 'like';
-        
+
         postLike.setAttribute('onclick', 'addLike(' + post.id + ')');
         let likeText = document.createElement('b');
-        likeText.innerText =  ((post.likes.length > 0) ? (post.likes.length) : (''));
+        likeText.innerText = ((post.likes.length > 0) ? (post.likes.length) : (''));
         postButtons.appendChild(postLike);
         postButtons.appendChild(likeText);
         postButtons.innerHTML += '<span>Like</span>';
-        if(user == post.author) {
-            postButtons.innerHTML += '<img src="img/edit.png" class="like"> Edit post<img src="img/delete.png" class="like"> Delete post';
+        if (user == post.author) {
+            let editImg = document.createElement('img');
+            editImg.className = 'like';
+            editImg.src = 'img/edit.png';
+            let editSpan = document.createElement('span');
+            editSpan.innerText = 'Edit post';
+            postButtons.appendChild(editImg);
+            postButtons.appendChild(editSpan);
+
+            let deleteImg = document.createElement('img');
+            deleteImg.className = 'like';
+            deleteImg.src = 'img/delete.png';
+            deleteImg.onclick = function () {
+                removePost(post.id);
+            };
+            let deleteSpan = document.createElement('span');
+            deleteSpan.innerText = 'Delete post';
+            postButtons.appendChild(deleteImg);
+            postButtons.appendChild(deleteSpan);
         }
         postDiv.appendChild(userPhoto);
         postDiv.appendChild(dateItem);
@@ -121,21 +138,21 @@ let dom = (function() {
         photoContainer.appendChild(postDiv);
     }
 
-    function addLike(id){
-        if(user === null) {
+    function addLike(id) {
+        if (user === null) {
             return;
         }
         let photoPost = module.getPhotoPost(id);
-        if(photoPost) {
+        if (photoPost) {
             let postLikes = photoPost.likes;
             let changed = false;
-            for (let i = 0; i < postLikes.length; i++){
-                if(postLikes[i] == user) {
+            for (let i = 0; i < postLikes.length; i++) {
+                if (postLikes[i] == user) {
                     postLikes.splice(i, 1);
                     changed = true;
                 }
             }
-            if(!changed) {
+            if (!changed) {
                 postLikes.push(user);
             }
         }
@@ -147,7 +164,7 @@ let dom = (function() {
             setAuthors.add(photoPosts[i].author);
         }
         let select = document.querySelector('select');
-        for (let author of setAuthors) { 
+        for (let author of setAuthors) {
             let option = document.createElement('option');
             option.innerHTML = author;
             select.appendChild(option);
@@ -155,7 +172,7 @@ let dom = (function() {
     }
 
     function showPhotoPosts(skip = 0, top = 0, filterConfig = {}) {
-        document.body.querySelector('aside').innerHTML='';
+        document.body.querySelector('aside').innerHTML = '';
         if (user !== null) {
             let addButton = document.createElement('div');
             addButton.id = 'create';
@@ -167,7 +184,7 @@ let dom = (function() {
             dom.showPhotoPost(post, index);
         });
         postsVisible = currentphotoPosts.length;
-        if(photoPosts.length > currentphotoPosts.length) {
+        if (photoPosts.length > currentphotoPosts.length) {
             let buttonMore = document.createElement('button');
             buttonMore.type = 'button';
             buttonMore.id = 'more';
@@ -194,12 +211,12 @@ let dom = (function() {
         module.addPhotoPost(post);
         showPhotoPosts();
     }
-    
+
     function removePost(id) {
         module.removePhotoPost(id);
         showPhotoPosts();
     }
-    
+
     function editPost(id, post) {
         module.editPhotoPost(id, post);
         showPhotoPosts();
@@ -250,7 +267,7 @@ showPosts(4, 15, {});
 
 debugger;
 
-showPosts(0, 20, {author: 'Валай Александр'});
+showPosts(0, 20, { author: 'Валай Александр' });
 
 debugger;
 
