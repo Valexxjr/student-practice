@@ -1,16 +1,46 @@
 ﻿'use strict';
 let user = null;
 let dom = (function() {
-    function setUser(username = null) {
+    function setUserName(username = null) {
         let isUser = (username !== null);
         user = username;
         if (isUser) {
             document.getElementById('name').innerHTML = '<img src="img/avatar.png" width="12%" height="12%"/><span>' + username + '</span>';
-            document.querySelector('#logout').innerHTML = '<img src="img/logout.png" width="13%" height="13%"/><span>Log out</span>';
+            let logOut = document.querySelector('#logout');
+            logOut.innerHTML = '';
+            let image = document.createElement('img');
+            image.src = 'img/logout.png';
+            image.style.width = '13%';
+            image.style.height = '13%';
+
+            let logText = document.createElement('span');
+            logText.innerText = 'Log out';
+
+            logOut.appendChild(image);
+            logOut.appendChild(logText);
+            
+            logOut.onclick = function () {
+                setUser();
+            };
         }
         else {
             document.getElementById('name').innerHTML ='';
-            document.querySelector('#logout').innerHTML = '<img src="img/signin.png" width="13%" height="13%"/><span>Sign in</span>';
+            document.querySelector('#logout').innerHTML = '';
+            let signIn = document.querySelector('#logout');
+            let image = document.createElement('img');
+            image.src = 'img/signin.png';
+            image.style.width = '13%';
+            image.style.height = '13%';
+
+            let signText = document.createElement('span');
+            signText.innerText = 'Sign in';
+
+            signIn.appendChild(image);
+            signIn.appendChild(signText);
+            
+            signIn.onclick = function() { 
+                setUser('Валай Александр') 
+            };
         }
     }
 
@@ -157,7 +187,7 @@ let dom = (function() {
 
     return {
         showPhotoPost,
-        setUser,
+        setUserName,
         addLike,
         selectAuthors,
         showPhotoPosts,
@@ -169,7 +199,7 @@ let dom = (function() {
 }());
 
 function setUser(user) {
-    dom.setUser(user);
+    dom.setUserName(user);
     showPosts();
 }
 
@@ -204,7 +234,7 @@ showPosts(0, 20, {author: 'Валай Александр'});
 
 debugger;
 
-setUser('alexandr');
+//setUser('alexandr');
 
 debugger;
 
@@ -242,7 +272,7 @@ debugger;
 
 removePost('26');
 
-setUser('Валай Александр');
+//setUser('Валай Александр');
 
 debugger;
 
