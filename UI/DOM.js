@@ -256,11 +256,14 @@ function filtrate() {
     let authorName = document.querySelector('select').value;
     let date = new Date(document.querySelector('input').value);
     let hashs = document.querySelectorAll('input')[1].value.split(' ');
+    hashs = hashs.filter(hashtag => {
+       hashtag.trim();
+       return hashtag != '';
+    });
     currentFilter = {author: authorName, createdAt: date, hashtags: hashs};
     if(authorName == '-') {
         currentFilter = {createdAt: date, hashtags: hashs};
     }
-
     postsVisible = 0;
     showPosts();
 }
