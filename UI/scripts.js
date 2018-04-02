@@ -188,6 +188,9 @@ let module = (function () {
         temp.sort((photopost1, photopost2) => {
             return photopost2.createdAt - photopost1.createdAt;
         });
+        if(top == -1) {
+            return temp;
+        }
         return temp.slice(skip, skip + top);
     }
 

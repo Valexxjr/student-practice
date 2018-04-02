@@ -30,14 +30,9 @@
       <p>
         <span>Hashtags:</span>
       </p>
-      <input value="#li" size="20">
-      <p><select>Hashs
-        <option disabled>####</option>
-        <option>#live</option>
-        <option>#life</option>
-        <option>#line</option>
-        <option>#library</option>
-   </select></p>
+      <input value="" size="20">
+      <p><select onchange="changeOption(this)">Hashs</select></p>
+      <input type="button" value="Apply" id="apply" onclick="filtrate()">
     </div>
   </main>
   <aside></aside>

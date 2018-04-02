@@ -1,9 +1,9 @@
 ﻿'use strict';
 let user = null;
 let postsVisible = 10;
+let currentFilter = {};
 let dom = (function () {
     function setUserName(username = null) {
-        postsVisible = 10;
         let isUser = (username !== null);
         user = username;
         if (isUser) {
@@ -163,11 +163,27 @@ let dom = (function () {
         for (let i = 0; i < photoPosts.length; i++) {
             setAuthors.add(photoPosts[i].author);
         }
+        setAuthors.add('-');
         let select = document.querySelector('select');
         for (let author of setAuthors) {
             let option = document.createElement('option');
             option.innerHTML = author;
             select.appendChild(option);
+        }
+    }
+
+    function selectHashtags() {
+        let setHashtags = new Set();
+        for (let i = 0; i < photoPosts.length; i++) {
+            photoPosts[i].hashtags.forEach(hashtag => {
+               setHashtags.add(hashtag);
+            });
+        }
+        let selectHashtag = document.querySelectorAll('select')[1];
+        for (let hashtag of setHashtags) {
+            let option = document.createElement('option');
+            option.innerText = hashtag;
+            selectHashtag.appendChild(option);
         }
     }
 
@@ -184,7 +200,7 @@ let dom = (function () {
             dom.showPhotoPost(post, index);
         });
         postsVisible = currentphotoPosts.length;
-        if (photoPosts.length > currentphotoPosts.length) {
+        if (module.getPhotoPosts(0, -1, filterConfig).length > currentphotoPosts.length) {
             let buttonMore = document.createElement('button');
             buttonMore.type = 'button';
             buttonMore.id = 'more';
@@ -204,7 +220,7 @@ let dom = (function () {
 
     function paginate(startNum) {
         startNum = startNum || 0;
-        showPhotoPosts(0, startNum + 10);
+        showPhotoPosts(0, startNum + 10, currentFilter);
     }
 
     function addPost(post) {
@@ -227,6 +243,7 @@ let dom = (function () {
         setUserName,
         addLike,
         selectAuthors,
+        selectHashtags,
         showPhotoPosts,
         addPost,
         removePost,
@@ -235,7 +252,26 @@ let dom = (function () {
 
 }());
 
+function filtrate() {
+    let authorName = document.querySelector('select').value;
+    let date = new Date(document.querySelector('input').value);
+    let hashs = document.querySelectorAll('input')[1].value.split(' ');
+    currentFilter = {author: authorName, createdAt: date, hashtags: hashs};
+    if(authorName == '-') {
+        currentFilter = {createdAt: date, hashtags: hashs};
+    }
+
+    postsVisible = 0;
+    showPosts();
+}
+
+function changeOption(hash) {
+    document.querySelectorAll('input')[1].value += ' ' + hash.options[hash.selectedIndex].text;
+}
+
 function setUser(user) {
+    currentFilter = {};
+    postsVisible = 0;
     dom.setUserName(user);
     showPosts();
 }
@@ -246,7 +282,7 @@ function addLike(id) {
 }
 
 function showPosts() {
-    dom.showPhotoPosts();
+    dom.showPhotoPosts(0, 10, currentFilter);
 }
 
 function addPost(id) {
@@ -261,6 +297,8 @@ function editPost(id, post) {
     dom.editPost(id, post);
 }
 
+setUser('Max Valai');
+/*
 debugger;
 
 showPosts(4, 15, {});
@@ -312,5 +350,6 @@ removePost('26');
 //setUser('Валай Александр');
 
 debugger;
-
+*/
 dom.selectAuthors();
+dom.selectHashtags();
