@@ -1,4 +1,4 @@
-﻿'use strict';
+﻿﻿'use strict';
 let user = null;
 let postsVisible = 10;
 let currentFilter = {};
@@ -46,9 +46,10 @@ let dom = (function () {
         }
     }
 
-    let photoContainer = document.querySelector('aside');
+
 
     function showPhotoPost(post, pos) {
+        let photoContainer = document.querySelector('aside');
         let isUser = (user === post.author);
         let postDiv = document.createElement('div');
         postDiv.className = 'post';
@@ -286,6 +287,8 @@ function addLike(id) {
 
 function showPosts() {
     dom.showPhotoPosts(0, 10, currentFilter);
+    dom.selectAuthors();
+    dom.selectHashtags();
 }
 
 function addPost(id) {
@@ -300,7 +303,43 @@ function editPost(id, post) {
     dom.editPost(id, post);
 }
 
-setUser('Max Valai');
+function initLogin() {
+    document.querySelector('#content').innerHTML = '<div id="form">\n' +
+        '  <h1>Authorization</h1>\n' +
+        '  <h3>Invalid Login/Password!</h3>\n' +
+        '    <h2>Login</h2>\n' +
+        '    <input size="20">\n' +
+        '    <h2>Password</h2>\n' +
+        '    <input size="20">\n' +
+        '\t<input type="button" value="Login" onclick="initMain()">\n' +
+        '  </div>';
+}
+
+function initMain(){
+    document.querySelector('#content').innerHTML = '<main>\n' +
+        '    <div id="filter">\n' +
+        '      <span>Authors name:</span>\n' +
+        '      <p><select>Hashs' +
+        '<option>-</option>>' +
+        '</select></p>\n' +
+        '      <br><br>\n' +
+        '      <p>\n' +
+        '        <span>Date:</span>\n' +
+        '      </p>\n' +
+        '      <input value="Date" size="20">\n' +
+        '      <br><br>\n' +
+        '      <p>\n' +
+        '        <span>Hashtags:</span>\n' +
+        '      </p>\n' +
+        '      <input value="" size="20">\n' +
+        '      <p><select onchange="changeOption(this)">Hashs</select></p>\n' +
+        '      <input type="button" value="Apply" id="apply" onclick="filtrate()">\n' +
+        '    </div>\n' +
+        '  </main>\n' +
+        '  <aside></aside>';
+        showPosts();
+}
+
 /*
 debugger;
 
@@ -354,5 +393,4 @@ removePost('26');
 
 debugger;
 */
-dom.selectAuthors();
-dom.selectHashtags();
+showPosts();

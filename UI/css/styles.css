@@ -302,3 +302,30 @@ select {
   font-size: 1.5vw;
   color: #444444;
 }
+
+#form {
+  background-color: #99aab4;
+  margin: 5% auto;
+  width: 40%;
+  border-radius: 5%;
+}
+
+#form h1 {
+  padding: 5%;
+  text-align: center;
+}
+
+#form h2 {
+  margin: 5%;
+}
+
+#form input {
+  margin-left: 5%;
+  margin-bottom: 5%;
+  font-size: 3vh;
+}
+
+#form h3 {
+  text-align: center;
+  color: red;
+}
