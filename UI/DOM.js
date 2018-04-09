@@ -1,5 +1,7 @@
 ﻿﻿'use strict';
 let user = null;
+let users = ['sanya', 'Валай Александр', 'user', '1111'];
+let passwords = ['sanya', 'valexx', 'password', '1111'];
 let postsVisible = 10;
 let currentFilter = {};
 let dom = (function () {
@@ -40,9 +42,6 @@ let dom = (function () {
             signIn.appendChild(image);
             signIn.appendChild(signText);
 
-            signIn.onclick = function () {
-                setUser('Валай Александр')
-            };
         }
     }
 
@@ -306,16 +305,48 @@ function editPost(id, post) {
 function initLogin() {
     document.querySelector('#content').innerHTML = '<div id="form">\n' +
         '  <h1>Authorization</h1>\n' +
-        '  <h3>Invalid Login/Password!</h3>\n' +
+        '  <h3></h3>\n' +
         '    <h2>Login</h2>\n' +
         '    <input size="20">\n' +
         '    <h2>Password</h2>\n' +
         '    <input size="20">\n' +
-        '\t<input type="button" value="Login" onclick="initMain()">\n' +
+        '\t<input type="button" value="Login" onclick="login()">\n' +
         '  </div>';
 }
 
-function initMain(){
+function login(){
+    let username = document.querySelector('input').value;
+    let password = document.querySelectorAll('input')[1].value;
+    let valid;
+    for(let i = 0; i < users.length; i++) {
+        if(username == users[i] && password == passwords[i]) {
+            user = users[i];
+            initMain();
+            return true;
+        }
+    }
+    document.querySelector('h3').innerText = 'Invalid Login/Password!';
+    return false;
+}
+
+function reset() {
+    setUser();
+    initMain();
+}
+function initMain() {
+    if(user) {
+        document.querySelector('#name').innerHTML = user;
+        document.querySelector('#logout').innerHTML = '<a href="#" onclick="reset()"> ' +
+            '<img src="img/logout.png" width="13%" height="13%"/> ' +
+            '<span>Log out</span> </a>';
+    }
+    else {
+        document.querySelector('#name').innerHTML = '';
+        document.querySelector('#logout').innerHTML = '<a href="#" onclick="initLogin()"> ' +
+            '<img src="img/signin.png" width="13%" height="13%"/> ' +
+            '<span>Sign in</span> ' +
+            '</a>';
+    }
     document.querySelector('#content').innerHTML = '<main>\n' +
         '    <div id="filter">\n' +
         '      <span>Authors name:</span>\n' +
