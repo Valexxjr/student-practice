@@ -23,25 +23,26 @@
     </nav>
   </header>
   <div id="content">
-  <main>
-    <div id="filter">
-      <span>Authors name:</span>
-      <p><select>Hashs</select></p>
-      <br><br>
-      <p>
-        <span>Date:</span>
-      </p>
-      <input value="Date" size="20">
-      <br><br>
-      <p>
-        <span>Hashtags:</span>
-      </p>
-      <input value="" size="20">
-      <p><select onchange="changeOption(this)">Hashs</select></p>
-      <input type="button" value="Apply" id="apply" onclick="filtrate()">
-    </div>
-  </main>
-  <aside></aside>
+    <main>
+      <div id="filter">
+        <span>Authors name:</span>
+        <input placeholder="Author" size="20">
+        <p><select onchange="setAuthorOption(this)">Hashs</select></p>
+        <br><br>
+        <p>
+          <span>Date:</span>
+        </p>
+        <input placeholder="27/02/2018" size="20">
+        <br><br>
+        <p>
+          <span>Hashtags:</span>
+        </p>
+        <input placeholder="#write #hashtags #here" size="20">
+        <p><select onchange="addHashtagOption(this)">Hashs</select></p>
+        <input type="button" value="Apply" id="apply" onclick="filtrate()">
+      </div>
+    </main>
+    <aside></aside>
   </div>
   <footer>
     <span>View, 2018</span>

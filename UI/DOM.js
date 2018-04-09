@@ -165,6 +165,7 @@ let dom = (function () {
         }
         setAuthors.add('-');
         let select = document.querySelector('select');
+        select.innerHTML = '';
         for (let author of setAuthors) {
             let option = document.createElement('option');
             option.innerHTML = author;
@@ -180,6 +181,7 @@ let dom = (function () {
             });
         }
         let selectHashtag = document.querySelectorAll('select')[1];
+        selectHashtag.innerHTML = '';
         for (let hashtag of setHashtags) {
             let option = document.createElement('option');
             option.innerText = hashtag;
@@ -220,22 +222,22 @@ let dom = (function () {
 
     function paginate(startNum) {
         startNum = startNum || 0;
-        showPhotoPosts(0, startNum + 10, currentFilter);
+        showPosts(0, startNum + 10, currentFilter);
     }
 
     function addPost(post) {
         module.addPhotoPost(post);
-        showPhotoPosts();
+        showPosts();
     }
 
     function removePost(id) {
         module.removePhotoPost(id);
-        showPhotoPosts();
+        showPosts();
     }
 
     function editPost(id, post) {
         module.editPhotoPost(id, post);
-        showPhotoPosts();
+        showPosts();
     }
 
     return {
@@ -253,9 +255,9 @@ let dom = (function () {
 }());
 
 function filtrate() {
-    let authorName = document.querySelector('select').value;
-    let date = new Date(document.querySelector('input').value);
-    let hashs = document.querySelectorAll('input')[1].value.split(' ');
+    let authorName = document.querySelector('input').value;
+    let date = new Date(document.querySelectorAll('input')[1].value);
+    let hashs = document.querySelectorAll('input')[2].value.split(' ');
     hashs = hashs.filter(hashtag => {
        hashtag.trim();
        return hashtag != '';
@@ -268,8 +270,12 @@ function filtrate() {
     showPosts();
 }
 
-function changeOption(hash) {
-    document.querySelectorAll('input')[1].value += ' ' + hash.options[hash.selectedIndex].text;
+function addHashtagOption(hash) {
+    document.querySelectorAll('input')[2].value += ' ' + hash.options[hash.selectedIndex].text;
+}
+
+function setAuthorOption(author) {
+    document.querySelector('input').value = author.options[author.selectedIndex].text;
 }
 
 function setUser(user) {
@@ -350,20 +356,19 @@ function initMain() {
     document.querySelector('#content').innerHTML = '<main>\n' +
         '    <div id="filter">\n' +
         '      <span>Authors name:</span>\n' +
-        '      <p><select>Hashs' +
-        '<option>-</option>>' +
-        '</select></p>\n' +
+        '<input placeholder="Author" size="20">' +
+        '<p><select onchange="setAuthorOption(this)">Hashs</select></p>' +
         '      <br><br>\n' +
         '      <p>\n' +
         '        <span>Date:</span>\n' +
         '      </p>\n' +
-        '      <input value="Date" size="20">\n' +
+        '      <input placeholder="27/02/2018" size="20">\n' +
         '      <br><br>\n' +
         '      <p>\n' +
         '        <span>Hashtags:</span>\n' +
         '      </p>\n' +
         '      <input value="" size="20">\n' +
-        '      <p><select onchange="changeOption(this)">Hashs</select></p>\n' +
+        '      <p><select onchange="addHashtagOption(this)">Hashs</select></p>\n' +
         '      <input type="button" value="Apply" id="apply" onclick="filtrate()">\n' +
         '    </div>\n' +
         '  </main>\n' +
