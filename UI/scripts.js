@@ -272,7 +272,8 @@ let module = (function () {
         getPhotoPosts,
         addPhotoPost,
         editPhotoPost,
-        removePhotoPost
+        removePhotoPost,
+        validatePhotoPost
     }
 }());
 

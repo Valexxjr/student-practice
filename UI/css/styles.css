@@ -329,3 +329,41 @@ select {
   text-align: center;
   color: red;
 }
+
+#formedit {
+  background-color: #99aab4;
+  margin: 5% auto;
+  width: 40%;
+  border-radius: 5%;
+  padding: 3%;
+}
+
+#formedit span {
+  padding-left: 3%;
+  padding-right: 3%;
+  display: inline;
+  font-size: 2vw;
+}
+
+#formedit h1 {
+  text-align: center;
+  padding-bottom: 2%;
+}
+
+#formedit h2 {
+  padding: 2%;
+}
+
+#formedit textarea {
+  resize: none;
+}
+
+#editblock {
+  padding-left: 7%;
+}
+
+#buttonedit {
+  display: inline;
+  float: right;
+  font-size: 1.5vw;
+}

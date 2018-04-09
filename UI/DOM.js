@@ -60,7 +60,7 @@ let dom = (function () {
         let dateItem = document.createElement('span');
         dateItem.id = 'date';
         let dateOptions = { hour: 'numeric', minute: 'numeric' };
-        dateItem.innerHTML = post.createdAt.toLocaleDateString('ru-RU', dateOptions);
+        dateItem.innerHTML = post.createdAt.toLocaleDateString();
 
         let mainImg = document.createElement('img');
         mainImg.className = 'photopost';
@@ -113,6 +113,9 @@ let dom = (function () {
         if (user == post.author) {
             let editImg = document.createElement('img');
             editImg.className = 'like';
+            editImg.onclick = function (){
+                initEdit(post);
+            };
             editImg.src = 'img/edit.png';
             let editSpan = document.createElement('span');
             editSpan.innerText = 'Edit post';
@@ -194,7 +197,7 @@ let dom = (function () {
         if (user !== null) {
             let addButton = document.createElement('div');
             addButton.id = 'create';
-            addButton.innerHTML = '<span>What\'s new? Create a post to share</span><a href=""><img src="img/add.png"></a>';
+            addButton.innerHTML = '<span>What\'s new? Create a post to share</span><a href="#" "><img src="img/add.png" onclick="initNew()"></a>';
             document.querySelector('aside').insertBefore(addButton, document.querySelector('aside').firstChild);
         }
         let currentphotoPosts = module.getPhotoPosts(skip, postsVisible + top, filterConfig);
@@ -296,8 +299,8 @@ function showPosts() {
     dom.selectHashtags();
 }
 
-function addPost(id) {
-    dom.addPost(id);
+function addPost(post) {
+    dom.addPost(post);
 }
 
 function removePost(id) {
@@ -318,6 +321,81 @@ function initLogin() {
         '    <input size="20">\n' +
         '\t<input type="button" value="Login" onclick="login()">\n' +
         '  </div>';
+}
+
+function currentDate() {
+    let d = new Date();
+    let dateOptions = { hour: 'numeric', minute: 'numeric' };
+    return d.toLocaleDateString('ru-RU', dateOptions);
+}
+
+function initNew() {
+    document.querySelector('#content').innerHTML = '<div id="formedit">\n' +
+        '          <h1>Add/Edit photopost</h1>  \n' +
+        '          <span>' + user + '</span>\n' +
+        '          <span id="date">' + currentDate() +
+        '          </span>\n' +
+        '          <h3></h3>\n' +
+        '          <div id = "editblock">\n' +
+        '            <h2>Photo*</h2>\n' +
+        '            <input size="30" placeholder="URL:">\n' +
+        '            <h2>Hashtags</h2>\n' +
+        '            <input size="30" placeholder="#put #hashtags #here">\n' +
+        '            <h2>Description*</h2>\n' +
+        '            <textarea cols="50" rows="5" type="text" placeholder="#what\'s that post about?"></textarea>\n' +
+        '          </div>\n' +
+        '        <input type="button" id="buttonedit" value="Apply" onclick="checkPost()">\n' +
+        '          </div>';
+
+}
+
+function initEdit(post) {
+    document.querySelector('#content').innerHTML = '<div id="formedit">\n' +
+        '          <h1>Add/Edit photopost</h1>  \n' +
+        '          <span>' + user + '</span>\n' +
+        '          <span id="date">' + currentDate() +
+        '          </span>\n' +
+        '          <h3></h3>\n' +
+        '          <div id = "editblock">\n' +
+        '          <h2>Photo*</h2>\n' +
+        '          <input size="20" placeholder="URL:" value="' + post.photoLink + '">\n' +
+        '          <h2>Hashtags</h2>\n' +
+        '          <input size="20" placeholder="#put #hashtags #here" value="' + post.hashtags.toString() + '">\n' +
+        '          <h2>Description*</h2>\n' +
+        '          <textarea cols="50" rows="5" type="text" placeholder="#what\'s that post about?">' + post.description + '</textarea>\n' +
+        '          </div>\n' +
+        '        <input type="button" id="buttonedit" value="Apply" onclick="checkPost(' + post.id + ')">\n' +
+        '          </div>';
+
+}
+
+function checkPost(id) {
+    let newPhotolink = document.querySelectorAll('input')[0].value;
+    let newHashtags = document.querySelectorAll('input')[1].value.split(' ');
+    let newDescription = document.querySelector('textarea').value;
+    let newId = 1;
+    while(photoPosts.some(post => { return post.id == newId;})) {
+        newId++;
+    }
+    newId += '';
+    if(id) {
+        let newlikes = module.getPhotoPost(id).likes;
+        newId = id + '';
+        let newPost = {id: newId, description: newDescription,
+        createdAt: new Date(), author: user,
+        photoLink: newPhotolink, likes: newlikes, hashtags: newHashtags};
+        initMain();
+        editPost(id, newPost);
+    }
+    else {
+        let newPost = {id: newId, description: newDescription,
+            createdAt: new Date(), author: user,
+            photoLink: newPhotolink, likes: [], hashtags: newHashtags};
+        if(module.validatePhotoPost(newPost)) {
+            initMain();
+            addPost(newPost);
+        }
+    }
 }
 
 function login(){
