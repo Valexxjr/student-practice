@@ -2,7 +2,7 @@
 let user = null;
 let users = ['sanya', 'Валай Александр', 'user', '1111'];
 let passwords = ['sanya', 'valexx', 'password', '1111'];
-let postsVisible = 10;
+let postsVisible = 0;
 let currentFilter = {};
 let dom = (function () {
     function setUserName(username = null) {
@@ -289,7 +289,6 @@ function setUser(user) {
     currentFilter = {};
     postsVisible = 0;
     dom.setUserName(user);
-    showPosts();
 }
 
 function addLike(id) {
@@ -366,7 +365,7 @@ function initEdit(post) {
         '          <h2>Hashtags</h2>\n' +
         '          <input size="20" placeholder="#put #hashtags #here" value="' + post.hashtags.toString() + '">\n' +
         '          <h2>Description*</h2>\n' +
-        '          <textarea cols="50" rows="5" type="text" placeholder="#what\'s that post about?">' + post.description + '</textarea>\n' +
+        '          <textarea cols="50" rows="5" type="text" placeholder="what\'s that post about?">' + post.description + '</textarea>\n' +
         '          </div>\n' +
         '        <input type="button" id="buttonedit" value="Apply" onclick="checkPost(' + post.id + ')">\n' +
         '          </div>';
@@ -408,7 +407,7 @@ function login(){
     let valid;
     for(let i = 0; i < users.length; i++) {
         if(username == users[i] && password == passwords[i]) {
-            user = users[i];
+            setUser(users[i]);
             initMain();
             return true;
         }

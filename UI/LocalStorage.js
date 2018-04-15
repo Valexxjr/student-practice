@@ -186,4 +186,6 @@ let photoPostsBackUp = [
     }];
 
 //Инициализация Local Storage для первого раза
-//storageModule.backupArray();
+if(!localStorage.getItem('photoPosts')) {
+    storageModule.backupArray();
+}
