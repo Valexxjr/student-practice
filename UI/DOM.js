@@ -159,6 +159,7 @@ let dom = (function () {
                 postLikes.push(user);
             }
         }
+        storageModule.saveArray();
     }
 
     function selectAuthors() {
@@ -231,16 +232,19 @@ let dom = (function () {
     function addPost(post) {
         module.addPhotoPost(post);
         showPosts();
+        storageModule.saveArray();
     }
 
     function removePost(id) {
         module.removePhotoPost(id);
         showPosts();
+        storageModule.saveArray();
     }
 
     function editPost(id, post) {
         module.editPhotoPost(id, post);
         showPosts();
+        storageModule.saveArray();
     }
 
     return {
