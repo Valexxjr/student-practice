@@ -23,9 +23,6 @@ let dom = (function () {
             logOut.appendChild(image);
             logOut.appendChild(logText);
 
-            logOut.onclick = function () {
-                setUser();
-            };
         }
         else {
             document.getElementById('name').innerHTML = '';
@@ -41,7 +38,7 @@ let dom = (function () {
 
             signIn.appendChild(image);
             signIn.appendChild(signText);
-
+            signIn.addEventListener('click', initLogin);
         }
     }
 
@@ -420,6 +417,7 @@ function reset() {
     setUser();
     initMain();
 }
+
 function initMain() {
     if(user) {
         document.querySelector('#name').innerHTML = user;
