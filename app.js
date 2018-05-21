@@ -47,6 +47,20 @@ app.post('/add', (req, res) => {
     }
 });
 
+app.post('/getPhotoPosts', (req, res) => {
+    let skip = req.query.skip;
+    let top = req.query.top;
+    let filterConfig = req.body;
+    let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+    scripts.photoPosts.initPosts(allPosts);
+    let photoPosts = scripts.photoPosts.getPhotoPosts(skip, top, filterConfig);
+    if (photoPosts !== undefined) {
+        res.send(photoPosts);
+    } else {
+        res.status(404).end();
+    }
+});
+
 app.delete('/delPost/:id', (req, res) => {
     let allPosts = JSON.parse(fs.readFileSync(jsonFile));
     scripts.photoPosts.initPosts(allPosts);
