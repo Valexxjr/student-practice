@@ -7,7 +7,7 @@ const scripts = require("./public/scripts.js");
 const jsonFile = "posts.json";
 
 app.use(express.static('./public'));
-
+app.use(bodyParser.json());
 app.get('/getPost/:id', (req, res) => {
 
     let allPosts = JSON.parse(fs.readFileSync(jsonFile));
