@@ -39,7 +39,7 @@
         return photoPosts.filter(post => { if (post.id == id) return true; })[0];
     }
 
-    /*function validatePhotoPost(photopost) {
+    function validatePhotoPost(photopost) {
         if (photopost.id === undefined || photopost.description === undefined || photopost.createdAt === undefined
             || photopost.author === undefined || photopost.photoLink === undefined)
             return false;
@@ -69,7 +69,7 @@
         return true;
     }
 
-    function addPhotoPost(photopost) {
+    exp.addPhotoPost = function addPhotoPost(photopost) {
         if (validatePhotoPost(photopost)) {
             photoPosts.push(photopost);
             return true;
@@ -77,7 +77,7 @@
         return false;
     }
 
-    function removePhotoPost(id) {
+    exp.removePhotoPost = function removePhotoPost(id) {
         if (id === null || id === undefined)
             return false;
         return photoPosts.some((post, i) => {
@@ -89,7 +89,7 @@
         });
     }
 
-    function editPhotoPost(id, photopost = {}) {
+    exp.editPhotoPost = function editPhotoPost(id, photopost = {}) {
         return photoPosts.some(post => {
             if (post.id != id)
                 return false;
@@ -107,7 +107,7 @@
                 post.likes = photopost.likes;
             return true;
         });
-    }*/
+    }
 })(this.photoPosts = {});
 //storageModule.loadArray();
 /*
