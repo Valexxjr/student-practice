@@ -142,7 +142,7 @@ let dom = (function () {
         if (user === null) {
             return;
         }
-        let photoPost = module.getPhotoPost(id);
+        let photoPost = postsModule.getPhotoPost(id);
         if (photoPost) {
             let postLikes = photoPost.likes;
             let changed = false;
@@ -198,12 +198,12 @@ let dom = (function () {
             addButton.innerHTML = '<span>What\'s new? Create a post to share</span><a href="#" "><img src="img/add.png" onclick="initNew()"></a>';
             document.querySelector('aside').insertBefore(addButton, document.querySelector('aside').firstChild);
         }
-        let currentphotoPosts = module.getPhotoPosts(skip, postsVisible + top, filterConfig);
+        let currentphotoPosts = postsModule.getPhotoPosts(skip, postsVisible + top, filterConfig);
         currentphotoPosts.forEach((post, index) => {
             dom.showPhotoPost(post, index);
         });
         postsVisible = currentphotoPosts.length;
-        if (module.getPhotoPosts(0, -1, filterConfig).length > currentphotoPosts.length) {
+        if (postsModule.getPhotoPosts(0, -1, filterConfig).length > currentphotoPosts.length) {
             let buttonMore = document.createElement('button');
             buttonMore.type = 'button';
             buttonMore.id = 'more';
@@ -227,19 +227,19 @@ let dom = (function () {
     }
 
     function addPost(post) {
-        module.addPhotoPost(post);
+        postsModule.addPhotoPost(post);
         showPosts();
         storageModule.saveArray();
     }
 
     function removePost(id) {
-        module.removePhotoPost(id);
+        postsModule.removePhotoPost(id);
         showPosts();
         storageModule.saveArray();
     }
 
     function editPost(id, post) {
-        module.editPhotoPost(id, post);
+        postsModule.editPhotoPost(id, post);
         showPosts();
         storageModule.saveArray();
     }
@@ -379,7 +379,7 @@ function checkPost(id) {
     }
     newId += '';
     if(id) {
-        let newlikes = module.getPhotoPost(id).likes;
+        let newlikes = postsModule.getPhotoPost(id).likes;
         newId = id + '';
         let newPost = {id: newId, description: newDescription,
         createdAt: new Date(), author: user,
@@ -391,7 +391,7 @@ function checkPost(id) {
         let newPost = {id: newId, description: newDescription,
             createdAt: new Date(), author: user,
             photoLink: newPhotolink, likes: [], hashtags: newHashtags};
-        if(module.validatePhotoPost(newPost)) {
+        if(postsModule.validatePhotoPost(newPost)) {
             initMain();
             addPost(newPost);
         }
