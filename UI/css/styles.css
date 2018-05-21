@@ -17,8 +17,6 @@ header {
   width: 98%;
   height: 15%;
   padding: 1%;
-  border-top: 2px solid #606060;
-  border-bottom: 2px solid #606060;
 }
 
 #logo-container {
@@ -68,7 +66,6 @@ header {
 
   main {
     float: left;
-    border-right: 1px solid #606060;
     width: 40%;
     height: 86vh;
   }
@@ -130,8 +127,6 @@ header {
     width: 98%;
     padding: 1%;
     height: 2%;
-    border-top: 2px solid #606060;
-    border-bottom: 2px solid #606060;
     position: absolute;
     bottom: 0;
     float: bottom;
@@ -254,15 +249,31 @@ header {
 .description p, .hashtags p {
   margin: 5%;
 }
+
+.like:hover {
+  transform: translateY(-7px);
+  cursor: pointer;
+}
+
 .like {
   margin: 0.5%;
   margin-left: 5%;
+  margin-right: 3%;
   width: 1.6vw;
   height: 1.6vw;
+  outline: none;
+  color: #524f4e;
+  transition: .35s;
 }
+
+.buttons span {
+  padding-left: 3%;
+}
+
 .buttons b {
   margin-right: 1%;
 }
+
 #more {
   margin-top: 2%;
   background-color: #ebebeb;
@@ -290,4 +301,69 @@ select {
   width: 66%;
   font-size: 1.5vw;
   color: #444444;
+}
+
+#form {
+  background-color: #99aab4;
+  margin: 5% auto;
+  width: 40%;
+  border-radius: 5%;
+}
+
+#form h1 {
+  padding: 5%;
+  text-align: center;
+}
+
+#form h2 {
+  margin: 5%;
+}
+
+#form input {
+  margin-left: 5%;
+  margin-bottom: 5%;
+  font-size: 3vh;
+}
+
+#form h3 {
+  text-align: center;
+  color: red;
+}
+
+#formedit {
+  background-color: #99aab4;
+  margin: 5% auto;
+  width: 40%;
+  border-radius: 5%;
+  padding: 3%;
+}
+
+#formedit span {
+  padding-left: 3%;
+  padding-right: 3%;
+  display: inline;
+  font-size: 2vw;
+}
+
+#formedit h1 {
+  text-align: center;
+  padding-bottom: 2%;
+}
+
+#formedit h2 {
+  padding: 2%;
+}
+
+#formedit textarea {
+  resize: none;
+}
+
+#editblock {
+  padding-left: 7%;
+}
+
+#buttonedit {
+  display: inline;
+  float: right;
+  font-size: 1.5vw;
 }
