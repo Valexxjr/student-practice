@@ -56,7 +56,7 @@ app.delete('/delPost/:id', (req, res) => {
                 throw error;
             }
         });
-        res.send(allPosts[req.params.id]);
+        res.send(req.params.id);
     } else {
         res.status(404).end();
     }
@@ -64,13 +64,14 @@ app.delete('/delPost/:id', (req, res) => {
 
 app.put('/editPost/:id', (req, res) => {
     let allPosts = JSON.parse(fs.readFileSync(jsonFile));
-    if ( posts.photoPosts.editPhotoPost(allPosts, req.params.id, req.body)) {
+    scripts.photoPosts.initPosts(allPosts);
+    if ( scripts.photoPosts.editPhotoPost(req.params.id, req.body)) {
         fs.writeFile(jsonFile, JSON.stringify(allPosts), function (error) {
             if (error) {
                 throw error;
             }
         });
-        res.status(200).end();
+        res.send(req.body);
     } else {
         res.status(404).end();
     }
