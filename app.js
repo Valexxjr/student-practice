@@ -11,8 +11,8 @@ app.use(express.static('./public'));
 app.get('/getPost/:id', (req, res) => {
 
     let array = JSON.parse(fs.readFileSync(jsonFile));
-    scripts.module.initPosts(array);
-    let post = scripts.module.getPhotoPost(array, req.params.id);
+    scripts.photoPosts.initPosts(array);
+    let post = scripts.photoPosts.getPhotoPost(req.params.id);
     if(post) {
         fs.writeFile(jsonFile, JSON.stringify(array), function (error) {
             if (error) {

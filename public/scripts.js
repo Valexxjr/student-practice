@@ -1,12 +1,11 @@
-﻿'use strict';
-let photoPosts;
-let postsModule = (function () {
+﻿(function(exp) {
+    let photoPosts;
 
-    function initPosts(postArray) {
+    exp.initPosts = function initPosts(postArray) {
         photoPosts = postArray;
     }
 
-    function getPhotoPosts(skip = 0, top = 10, filterConfig = {}) {
+    exp.getPhotoPosts = function getPhotoPosts(skip = 0, top = 10, filterConfig = {}) {
         let temp = photoPosts.filter(post => {
             if (filterConfig.author !== undefined && filterConfig.author.length > 0) {
                 if (post.author != filterConfig.author)
@@ -36,11 +35,11 @@ let postsModule = (function () {
         return temp.slice(skip, skip + top);
     }
 
-    function getPhotoPost(id) {
+    exp.getPhotoPost = function getPhotoPost(id) {
         return photoPosts.filter(post => { if (post.id == id) return true; })[0];
     }
 
-    function validatePhotoPost(photopost) {
+    /*function validatePhotoPost(photopost) {
         if (photopost.id === undefined || photopost.description === undefined || photopost.createdAt === undefined
             || photopost.author === undefined || photopost.photoLink === undefined)
             return false;
@@ -108,17 +107,8 @@ let postsModule = (function () {
                 post.likes = photopost.likes;
             return true;
         });
-    }
-    return {
-        initPosts,
-        getPhotoPost,
-        getPhotoPosts,
-        addPhotoPost,
-        editPhotoPost,
-        removePhotoPost,
-        validatePhotoPost
-    }
-}());
+    }*/
+})(this.photoPosts = {});
 //storageModule.loadArray();
 /*
 console.log('Getting posts:');
