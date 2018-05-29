@@ -3,7 +3,7 @@ const app = express();
 const port = 8080;
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const scripts = require("./public/scripts.js");
+const scripts = require("./scripts.js");
 const jsonFile = "posts.json";
 
 app.use(express.static('./public'));
