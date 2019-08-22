@@ -1,8 +1,96 @@
 const express = require('express');
 const app = express();
 const port = 8080;
+const fs = require('fs');
+const bodyParser = require('body-parser');
+const scripts = require("./scripts.js");
+const jsonFile = "posts.json";
 
 app.use(express.static('./public'));
+app.use(bodyParser.json());
+app.get('/getPost/:id', (req, res) => {
+
+    let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+    scripts.photoPosts.initPosts(allPosts);
+    let post = scripts.photoPosts.getPhotoPost(req.params.id);
+    if(post) {
+        fs.writeFile(jsonFile, JSON.stringify(allPosts), function (error) {
+            if (error) {
+                throw error;
+            }
+        });
+        console.log(post);
+        res.send(post);
+    }
+    else {
+        console.log(post);
+        res.status(404).end();
+    }
+});
+
+app.post('/add', (req, res) => {
+    let post = req.body;
+    post.createdAt = new Date();
+    let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+    scripts.photoPosts.initPosts(allPosts);
+    if (scripts.photoPosts.addPhotoPost(post)) {
+        fs.writeFile(jsonFile, JSON.stringify(allPosts), function (error) {
+            if (error) {
+                throw error;
+            }
+        });
+        res.send(post);
+    }
+    else {
+        console.log(post);
+        res.status(404).end();
+    }
+});
+
+app.post('/getPhotoPosts', (req, res) => {
+    let skip = req.query.skip;
+    let top = req.query.top;
+    let filterConfig = req.body;
+    let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+    scripts.photoPosts.initPosts(allPosts);
+    let photoPosts = scripts.photoPosts.getPhotoPosts(skip, top, filterConfig);
+    if (photoPosts !== undefined) {
+        res.send(photoPosts);
+    } else {
+        res.status(404).end();
+    }
+});
+
+app.delete('/delPost/:id', (req, res) => {
+    let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+    scripts.photoPosts.initPosts(allPosts);
+    if (scripts.photoPosts.removePhotoPost(req.params.id)) {
+        fs.writeFile(jsonFile, JSON.stringify(allPosts), function (error) {
+            if (error) {
+                throw error;
+            }
+        });
+        res.send(req.params.id);
+    } else {
+        res.status(404).end();
+    }
+});
+
+app.put('/editPost/:id', (req, res) => {
+    let allPosts = JSON.parse(fs.readFileSync(jsonFile));
+    scripts.photoPosts.initPosts(allPosts);
+    if ( scripts.photoPosts.editPhotoPost(req.params.id, req.body)) {
+        fs.writeFile(jsonFile, JSON.stringify(allPosts), function (error) {
+            if (error) {
+                throw error;
+            }
+        });
+        res.send(req.body);
+    } else {
+        res.status(404).end();
+    }
+
+});
 
 app.listen(port, () => {
     console.log('Server is listening at ' + port);

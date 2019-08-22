@@ -1,8 +1,11 @@
-﻿'use strict';
-let photoPosts;
-let module = (function () {
+﻿(function(exp) {
+    let photoPosts;
 
-    function getPhotoPosts(skip = 0, top = 10, filterConfig = {}) {
+    exp.initPosts = function initPosts(postArray) {
+        photoPosts = postArray;
+    }
+
+    exp.getPhotoPosts = function getPhotoPosts(skip = 0, top = 10, filterConfig = {}) {
         let temp = photoPosts.filter(post => {
             if (filterConfig.author !== undefined && filterConfig.author.length > 0) {
                 if (post.author != filterConfig.author)
@@ -32,7 +35,7 @@ let module = (function () {
         return temp.slice(skip, skip + top);
     }
 
-    function getPhotoPost(id) {
+    exp.getPhotoPost = function getPhotoPost(id) {
         return photoPosts.filter(post => { if (post.id == id) return true; })[0];
     }
 
@@ -66,7 +69,7 @@ let module = (function () {
         return true;
     }
 
-    function addPhotoPost(photopost) {
+    exp.addPhotoPost = function addPhotoPost(photopost) {
         if (validatePhotoPost(photopost)) {
             photoPosts.push(photopost);
             return true;
@@ -74,7 +77,7 @@ let module = (function () {
         return false;
     }
 
-    function removePhotoPost(id) {
+    exp.removePhotoPost = function removePhotoPost(id) {
         if (id === null || id === undefined)
             return false;
         return photoPosts.some((post, i) => {
@@ -86,7 +89,7 @@ let module = (function () {
         });
     }
 
-    function editPhotoPost(id, photopost = {}) {
+    exp.editPhotoPost = function editPhotoPost(id, photopost = {}) {
         return photoPosts.some(post => {
             if (post.id != id)
                 return false;
@@ -105,68 +108,60 @@ let module = (function () {
             return true;
         });
     }
-    return {
-        getPhotoPost,
-        getPhotoPosts,
-        addPhotoPost,
-        editPhotoPost,
-        removePhotoPost,
-        validatePhotoPost
-    }
-}());
-storageModule.loadArray();
+})(this.photoPosts = {});
+//storageModule.loadArray();
 /*
 console.log('Getting posts:');
 console.log('\nDefault:');
-console.log(module.getPhotoPosts());
+console.log(postsModule.getPhotoPosts());
 
 console.log('\n20 posts with author and hashtags:');
-console.log(module.getPhotoPosts(0, 20, { author: 'Валай Александр', hashtags: ['#belarus', '#2018', '#olimp'] }))
+console.log(postsModule.getPhotoPosts(0, 20, { author: 'Валай Александр', hashtags: ['#belarus', '#2018', '#olimp'] }))
 
 console.log('\nSame hashtags without author:');
-console.log(module.getPhotoPosts(0, 20, { hashtags: ['#belarus', '#2018', '#olimp'] }))
+console.log(postsModule.getPhotoPosts(0, 20, { hashtags: ['#belarus', '#2018', '#olimp'] }))
 
 console.log('\n55 posts with date and hashtags:');
-console.log(module.getPhotoPosts(0, 55, { createdAt: new Date('2018-02-26T23:00:00'), hashtags: ['#again'] }));
+console.log(postsModule.getPhotoPosts(0, 55, { createdAt: new Date('2018-02-26T23:00:00'), hashtags: ['#again'] }));
 
 console.log('\n3 posts starting from 12 with default filter:');
-console.log(module.getPhotoPosts(12, 3));
+console.log(postsModule.getPhotoPosts(12, 3));
 
 console.log('\n20 posts with author Валай Александр');
-console.log(module.getPhotoPosts(0, 20, { author: 'Валай Александр' }));
+console.log(postsModule.getPhotoPosts(0, 20, { author: 'Валай Александр' }));
 
 console.log('\n20 posts with wrong author');
-console.log(module.getPhotoPosts(0, 20, { author: 'noname' }));
+console.log(postsModule.getPhotoPosts(0, 20, { author: 'noname' }));
 
 console.log('\nWrong parameter 1');
-console.log(module.getPhotoPosts({ lalala: '11' }));
+console.log(postsModule.getPhotoPosts({ lalala: '11' }));
 
 console.log('\nWrong parameter 2');
-console.log(module.getPhotoPosts({ hashtags: '11' }));
+console.log(postsModule.getPhotoPosts({ hashtags: '11' }));
 
 
 console.log('\nWrong parameter 3');
-console.log(module.getPhotoPosts([2, 4], [11, -4], { hashtags: '11' }));
+console.log(postsModule.getPhotoPosts([2, 4], [11, -4], { hashtags: '11' }));
 
 console.log('\nWrong parameter 4');
-console.log(module.getPhotoPosts('array', { hashtags: '11' }));
+console.log(postsModule.getPhotoPosts('array', { hashtags: '11' }));
 
 console.log('\nGetting post by id 3:');
-console.log(module.getPhotoPost('3'));
+console.log(postsModule.getPhotoPost('3'));
 console.log('\nGetting post by wrong id:');
-console.log(module.getPhotoPost('43'));
+console.log(postsModule.getPhotoPost('43'));
 
 console.log('Removing post by id 10:');
 console.log('Size of array = ' + photoPosts.length);
-console.log(module.removePhotoPost('10'));
+console.log(postsModule.removePhotoPost('10'));
 console.log('Size of array now = ' + photoPosts.length);
 console.log('Removing post by wrong id:');
-console.log(module.removePhotoPost('201'))
+console.log(postsModule.removePhotoPost('201'))
 console.log('Size of array now = ' + photoPosts.length)
 
 console.log('Adding post by id 22:');
 console.log('Size of array = ' + photoPosts.length)
-console.log(module.addPhotoPost({
+console.log(postsModule.addPhotoPost({
     id: '22',
     description: 'Женская сборная Беларуси выиграла эстафету в рамках соревнований по биатлону на Олимпийских играх в Пхёнчхане!!!',
     createdAt: new Date('2018-02-23T23:00:00'),
@@ -177,14 +172,14 @@ console.log(module.addPhotoPost({
 }));
 console.log('Size of array now = ' + photoPosts.length)
 console.log('\nAdding post with wrong parameters:');
-console.log(module.addPhotoPost({
+console.log(postsModule.addPhotoPost({
     id: '22',
     description: 'Женская сборная Беларуси выиграла эстафету в рамках соревнований по биатлону на Олимпийских играх в Пхёнчхане!!!',
     createdAt: new Date('2018-02-23T23:00:00'),
     author: 'Sanya',
     photoLink: ''
 }));
-console.log(module.addPhotoPost({
+console.log(postsModule.addPhotoPost({
     id: '22',
     description: 'Женская сборная Беларуси выиграла эстафету в рамках соревнований по биатлону на Олимпийских играх в Пхёнчхане!!!',
     createdAt: new Date('2018-02-23T23:00:00'),
@@ -193,10 +188,10 @@ console.log(module.addPhotoPost({
 }));
 
 console.log('\nEditing of first post:');
-console.log(module.editPhotoPost(1, { photoLink: 'https://s3-eu-west-1.amazonaws.com/jobbio-production/topic/edited-2202696999-logo.jpg', hashtags: ['#changed', '#all'], likes: ['also', 'changed'] }));
+console.log(postsModule.editPhotoPost(1, { photoLink: 'https://s3-eu-west-1.amazonaws.com/jobbio-production/topic/edited-2202696999-logo.jpg', hashtags: ['#changed', '#all'], likes: ['also', 'changed'] }));
 console.log(photoPosts[0]);
 console.log('\nEditing with wrong id:');
-console.log(module.editPhotoPost(123, { photoLink: 'Changed', hashtags: '#changed', likes: ['also', 'changed'] }));
+console.log(postsModule.editPhotoPost(123, { photoLink: 'Changed', hashtags: '#changed', likes: ['also', 'changed'] }));
 console.log('\nEditing with empty parameters:');
-console.log(module.editPhotoPost(1));
+console.log(postsModule.editPhotoPost(1));
 console.log(photoPosts[0]);*/
